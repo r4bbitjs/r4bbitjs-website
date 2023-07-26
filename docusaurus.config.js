@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'R4bbitjs',
+  tagline: 'The best way to use RabbitMQ',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -73,7 +73,7 @@ const config = {
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
-            position: 'left',
+            position: 'right',
             label: 'Tutorial',
           },
           {to: '/blog', label: 'Blog', position: 'left'},

@@ -1,6 +1,7 @@
 {
   "name": "docusaurus-example",
   "version": "0.0.0",
+  "homepage": "https://r4bbitjs.github.io",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
