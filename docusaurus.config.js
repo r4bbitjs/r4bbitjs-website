@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'R4bbitjs',
   tagline: 'The best way to use RabbitMQ',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/r4bbit_logo.ico',
 
   // Set the production url of your site here
   url: 'https://r4bbitjs.github.io',
@@ -36,25 +36,25 @@ const config = {
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
+          // sidebar: {
+          //   autoCollapseCategories: true,
+          // },
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/r4bbitjs/r4bbitjs.github.io/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      }),
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        }
+      }
     ],
   ],
 
@@ -64,21 +64,20 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: 'R4bbit',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'R4bbitjs Logo',
+          src: 'img/logo.png',
         },
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'right',
-            label: 'Tutorial',
+            sidebarId: 'tutorialsSidebar',
+            position: 'left',
+            label: 'Docs',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/r4bbitjs/r4bbitjs/',
             label: 'GitHub',
             position: 'right',
           },
@@ -117,17 +116,13 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
                 label: 'GitHub',
                 href: 'https://github.com/facebook/docusaurus',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} R4bbit, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
