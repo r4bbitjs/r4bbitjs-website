@@ -1,33 +1,47 @@
-import React from 'react';
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import React from "react";
+import clsx from "clsx";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Layout from "@theme/Layout";
+import HomepageFeatures from "@site/src/components/HomepageFeatures";
 
-import styles from './index.module.css';
+import styles from "./index.module.css";
+
+const R4bbitLogo = require("@site/static/img/logo.svg").default;
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-        ThisR4bbit library is a simplified abstraction library for working with RabbitMQ in TypeScript. The purpose of this library is to streamline the process of sending and receiving messages from a RabbitMQ server.
-        </div>
-      </div>
-    </header>
+    // <div className={clsx(styles.container)}>
+    //   <div className={clsx(styles.flexContainer)}>
+    //     <img src={require("@site/static/img/logo.png").default} />
+    //   </div>
+    //   <div className={clsx(styles.flexGrow)}>
+    //     <div className={clsx(styles.flexContainer)}>
+    //       <div className={styles.flexText}>
+    //         <h1 className={styles.headerTitle}>R4bbit</h1>
+    //         <p className={styles.headerParagraph}>
+    //           The best way to use RabbitMQ in TypeScript!
+    //         </p>
+
+    //         <a className={clsx(styles.ctaButton)} href="/docs/getting-started">
+    //           Get started
+    //         </a>
+    //         <p className="text-red-900 text-xl">test</p>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+
+    <div className="container flex justify-items-center w-full h-80">
+      <div className=""></div>
+    </div>
   );
 }
 
 export default function Home(): JSX.Element {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
-    <Layout
-      title={`r4bbit 🐇`}
-      description="The best way to use RabbitMQ">
+    <Layout title={`r4bbit 🐇`} description="The best way to use RabbitMQ">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

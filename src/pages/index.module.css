@@ -21,3 +21,79 @@
   align-items: center;
   justify-content: center;
 }
+
+.dummy {
+  margin-top: 2rem;
+}
+
+.container {
+  min-height: 80vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem 8rem;
+}
+
+.flexContainer {
+  height: 100%;
+  min-width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexText {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: start;
+}
+
+.flexGrow {
+  flex-grow: 1;
+}
+
+.headerTitle {
+  font-size: 6rem;
+  background: rgb(255, 130, 3);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 130, 3, 1) 0%,
+    rgba(236, 52, 4, 1) 63%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0;
+}
+
+.headerParagraph {
+  font-size: 1rem;
+  margin-bottom: 0;
+  font-weight: 300;
+}
+
+.ctaButton {
+  margin-top: 1rem;
+
+  background: rgb(255, 130, 3);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 130, 3, 1) 0%,
+    rgba(236, 52, 4, 1) 63%
+  );
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 0.4em;
+  padding: 0.5em;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    color: white;
+    transform: scale(1.08);
+    text-decoration: none;
+  }
+}
