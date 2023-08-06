@@ -33,7 +33,12 @@ function HomepageHeader() {
     // </div>
 
     <div className="container flex justify-items-center w-full h-80">
-      <div className=""></div>
+      <div className="h-full min-w-[50%] flex justify-items-center align-middle">
+        <img src={require("@site/static/img/logo.png").default} />
+      </div>
+      <div className="h-full min-w-[50%] flex justify-items-center align-middle">
+        <h1 className="text-8xl ">R4bbit</h1>
+      </div>
     </div>
   );
 }
