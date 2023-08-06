@@ -51,11 +51,9 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-          // sidebar: {
-          //   autoCollapseCategories: true,
-          // },
-          editUrl: "https://github.com/r4bbitjs/r4bbitjs.github.io/",
+          sidebarPath: require.resolve('./sidebars.js'),
+          editUrl:
+            'https://github.com/r4bbitjs/r4bbitjs.github.io/',
         },
         theme: {
           // defaultMode: "dark",

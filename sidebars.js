@@ -24,6 +24,16 @@ module.exports = {
       label: 'Api Reference',
       items: [
         {
+          type: 'category',
+          label: 'Interfaces',
+          items: [
+            {
+              type: 'doc',
+              id: 'api-reference/interfaces/InitRabbitOptions',
+            }
+          ]
+        },
+        {
           type: 'doc',
           id: 'api-reference/client',
         },
@@ -33,5 +43,5 @@ module.exports = {
         },
       ],
     },
-  ] 
+  ]
 };
