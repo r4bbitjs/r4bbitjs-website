@@ -11,27 +11,6 @@ const R4bbitLogo = require("@site/static/img/logo.svg").default;
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
-    // <div className={clsx(styles.container)}>
-    //   <div className={clsx(styles.flexContainer)}>
-    //     <img src={require("@site/static/img/logo.png").default} />
-    //   </div>
-    //   <div className={clsx(styles.flexGrow)}>
-    //     <div className={clsx(styles.flexContainer)}>
-    //       <div className={styles.flexText}>
-    //         <h1 className={styles.headerTitle}>R4bbit</h1>
-    //         <p className={styles.headerParagraph}>
-    //           The best way to use RabbitMQ in TypeScript!
-    //         </p>
-
-    //         <a className={clsx(styles.ctaButton)} href="/docs/getting-started">
-    //           Get started
-    //         </a>
-    //         <p className="text-red-900 text-xl">test</p>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className="container w-full h-80 md:h-[85vh] xl:h-[85vh] md:pb-24 flex-wrap md:columns-2 flex  flex-row items-center justify-center md:block gap-12 xl:gap-9 pt-16">
       <div className="h-full flex justify-center items-center">
         <img className="max-w-[80%] 2xl:scale-150 md:max-w-none" src={require("@site/static/img/logo.png").default} />
