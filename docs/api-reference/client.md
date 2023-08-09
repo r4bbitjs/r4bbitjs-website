@@ -2,154 +2,159 @@ Client class is used to publish messages to the RabbitMQ server
 
 ## Methods
 
-### `init()`
-
-Initializes the client, used only internally. Users don't have to call this method
-
-```ts
-interface init(
-    connectionUrls: ConnectionUrl[] | ConnectionUrl,
-    options?: InitRabbitOptions
-): Promise<void>
-```
-
-**_Parameters_**
-
-- `connectionUrls` - RabbitMQ connection url or array of connection urls
-  - It specifies the connection URL (possibly with options) that are used to connect to the RabbitMQ server. It can be a single URL or an array of URLs. If an array is provided, the client will try to connect to the first URL, if it fails, it will try to connect to the second URL and so on. If no URL is provided, the client will try to connect to the default URL `amqp://localhost`.
-- `options` - Options for initializing the client
-
-**_Example usage_**
-
-```ts
-const client = new Client();
-await client.init("amqp://localhost");
-```
-
----
-
-### `publishMessage()`
+### publishMessage()
 
 Publishes message to the given exchange
 
 **_Parameters_**
 
-- `message` - Message to be published
-- `options` - Options for publishing the message
+- `message`: `Buffer | string | unknown` - Message to be published
+- `options`: [ClientOptions](#clientoptions) - Options for publishing the message
 
 **_Example usage_**
 
-Example in which the client publishes a message to the exchange `test` with the routing key `test`
+Example in which the client publishes a message to the exchange `my-exchang` with the routing key `my.routing-key`
 
 ```ts
-const client = await getClient("amqp://localhost");
-await client.publishMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
-});
+await client.publishMessage(
+  { content: "hello world!!!" },
+  {
+    exchangeName: "my-exchange",
+    routingKey: "my.routing-key",
+    loggerOptions: {
+      isDataHidden: false, // default is true,
+    },
+    sendType: "json", // default is 'json'
+  }
+);
 ```
 
-Example in which the client publishes a message to the exchange `test` with the routing key `test` and the data sanitization in enabled (`isDataHidden` is set to `true`)
+<div class="alert alert--warning" role="alert">
+  Beware that publish message does not accept any response returned. If you want to receive a response use <a href="#publishrpcmessage">publishRPCMessage</a> instead.
+</div>
+<br />
+
+---
+
+### publishRPCMessage()
+
+Publishes an RPC message to the given exchange and waits for a single response
+
+**_Parameters_**
+
+- `message`: `Buffer | string | unknown` - Message to be published
+- `options`: [ClientRPCOptions](#clientrpcoptions) - Options for publishing the message
+
+**_Example usage_**
+
+Example in which the client publishes a message to the exchange `test` with the routing key `test` and waits for the response with a timeout of 1 second
 
 ```ts
-const client = await getClient("amqp://localhost");
-await client.publishMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
+const rpcMessage = { message: "OurMessage", nested: { value: 15 } };
+
+await client.publishRPCMessage(rpcMessage, {
+  exchangeName: "rpc-exchange-name",
+  routingKey: "rpc.routing.key",
+  replyQueueName: "rpc-reply-queue", // A reply queue will be created for listening rpc answers
+  timeout: 5_000, // optional After 5 secs, returns what it receives
+  responseContains: {
+    // optional What data the response object will contain
+    content: true,
+    headers: true,
+    signature: true,
+  },
+  correlationId: "some-random-nanoid", // optional r4bbit provides a default random value,
   loggerOptions: {
-    isDataHidden: true,
+    // optional
+    isConsumeDataHidden: false, // default is true
+    isSendDataHidden: false, // default is true
   },
+  sendType: "json", // optional default is 'json'
+  receiveType: "json", // optional default is 'json'
+  replySignature: "rpc-server-signature", // optional
 });
 ```
 
 ---
 
-### `publishRPCMessage()`
+### publishMultipleRPC()
 
-Publishes message to the given exchange and waits for the response
+Publishes messages to the given exchange and waits for _multiple_ responses
 
-**_Parameters_**
+It has 2 possible strategies.
 
-- `message` - Message to be published
-- `options` - Options for publishing the message
+- Listening for all the messages and returning the replies after if timeout occurs or expected number of replies gets received.
+- Using a handler function that listens for all the messages, and at the moment that the message gets received, executing necessary actions.
 
-**_Example usage_**
-
-Example in which the client publishes a message to the exchange `test` with the routing key `test` and waits for the response
-
-```ts
-const client = await getClient("amqp://localhost");
-const response = await client.publishRPCMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
-});
-```
-
-Example in which the client publishes a message to the exchange `test` with the routing key `test` and waits for the response with a timeout of 1 second
-
-```ts
-const client = await getClient("amqp://localhost");
-const response = await client.publishRPCMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
-  timeout: 1000,
-});
-```
-
----
-
-### `publishMultipleRPC()`
-
-Publishes message to the given exchange and waits for multiple responses
+We are giving examples for both of those options
 
 **_Parameters_**
 
-- `message` - Message to be published
-- `options` - Options for publishing the message
+- `message`: `Buffer | string | unknown` - Message to be published
+- `options`: [ClientMultipleRPC](#clientmultiplerpc) - Options for publishing multiple rpc messages.
 
 **_Example usage_**
 
-Example in which the client publishes a message to the exchange `test` with the routing key `test` and waits for the response
+Example with specified number of expected replies (`waitedReplies: 2`) within timeout (`timeout: 5_000`):
 
 ```ts
-const client = await getClient("amqp://localhost");
-const response = await client.publishRPCMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
-});
-```
-
-Example in which the client publishes a message to the exchange `test` with the routing key `test` and waits for the response with a timeout of 1 second
-
-```ts
-const client = await getClient("amqp://localhost");
-const response = await client.publishRPCMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
-  timeout: 1000,
-});
-```
-
-Example in which the client publishes a message to the exchange `test` with the routing key `test` and waits for the response with a timeout of 1 second and waits for 2 responses
-
-```ts
-const client = await getClient("amqp://localhost");
-const response = await client.publishRPCMessage("Hello World", {
-  exchangeName: "test",
-  routingKey: "test",
-  timeout: 1000,
+await client.publishMultipleRPC(objectMessage, {
+  exchangeName: "multiple-rpc-exchange-name",
+  routingKey: "multiple-rpc.routing.key",
+  replyQueueName: "multiple-rpc-reply-queue",
+  timeout: 5_000,
   waitedReplies: 2,
-  handler: (data) => {
-    console.log(data);
+  responseContains: {
+    content: true,
+    headers: true,
+    signature: true,
+  },
+  correlationId: "some-random-nanoid", // optional r4bbit provides a default random value,
+  loggerOptions: {
+    // optional
+    isConsumeDataHidden: false,
+    isSendDataHidden: false,
+  },
+  sendType: "json", // optional default is 'json',
+  receiveType: "json", // optional default is 'json',
+  replySignature: "server-1", // optional,
+});
+```
+
+Example with unlimited number of replies that can occur within specified timespan `timeout: 5_000`:
+
+```ts
+await client.publishMultipleRPC(objectMessage, {
+  exchangeName: "multiple-rpc-exchange-name",
+  routingKey: "multiple-rpc.routing.key",
+  replyQueueName: "multiple-rpc-reply-queue",
+  timeout: 5_000,
+  responseContains: {
+    content: true,
+    headers: true,
+    signature: true,
+  },
+  handler: async (msg) => {
+    // Handler is taking actions immediately when reply is received.
+    switch (msg.signature) {
+      case "server-1":
+        console.log("Server-1 Received:", msg);
+        break;
+      case "server-2":
+        console.log("Server-2 Received:", msg);
+        break;
+      default:
+        console.log("Unknown resource Received", msg);
+    }
   },
 });
 ```
 
 ---
 
-### `close()`
+### close()
 
-Closes the connection
+Closes the connection with RabbitMq.
 
 **_Parameters_**
 
@@ -160,4 +165,115 @@ None
 ```ts
 const client = await getClient("amqp://localhost");
 await client.close();
+```
+
+## Types
+
+### ClientOptions
+
+```ts
+type ClientOptions = {
+  exchangeName: string;
+  routingKey: string;
+  sendType?: MessageType;
+  publishOptions?: Options.Publish; // Linked below 👇
+  loggerOptions?: {
+    isDataHidden?: boolean;
+  };
+};
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
+</div>
+<br />
+
+### ServerRPCOptions
+
+```ts
+type ServerRPCOptions = {
+  publishOptions?: Options.Publish; // Linked below 👇
+  consumeOptions?: Options.Consume; // Linked below 👇
+  sendType?: MessageType;
+  correlationId?: string;
+  replySignature?: string;
+  responseContains?: ServerResponseContains;
+  loggerOptions?: {
+    isSendDataHidden?: boolean;
+    isConsumeDataHidden?: boolean;
+  };
+};
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
+  See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
+</div>
+<br />
+
+### ClientRPCOptions
+
+Link for the custom types used as property of ClientRPCOptions type
+
+- [MessageType](#messagetype)
+- [ResponseContains](#responsecontains)
+- [ServerRPCOptions](#serverrpcoptions)
+
+```ts
+type ClientRPCOptions = {
+  exchangeName: string;
+  routingKey: string;
+  replyQueueName: string;
+  receiveType?: MessageType;
+  timeout?: number;
+  responseContains?: ResponseContains;
+} & ServerRPCOptions;
+```
+
+### ClientMultipleRPC
+
+Link for the custom types used as property of ClientMultipleRPC type
+
+- [MessageType](#messagetype)
+- [ResponseContains](#responsecontains)
+- [ServerRPCOptions](#serverrpcoptions)
+
+```ts
+export type ClientMultipleRPC = {
+  exchangeName: string;
+  routingKey: string;
+  replyQueueName: string;
+  receiveType?: MessageType;
+  timeout?: number;
+  responseContains?: ResponseContains;
+  waitedReplies?: number;
+  handler?: (msg: Record<string, unknown>) => void;
+} & ServerRPCOptions;
+```
+
+### MessageType
+
+```ts
+type MessageType = "json" | "string" | "object";
+```
+
+### ResponseContains
+
+```ts
+type ResponseContains = {
+  signature?: boolean;
+  headers?: boolean;
+  content?: boolean;
+};
+```
+
+### ServerResponseContains
+
+```ts
+type ServerResponseContains = {
+  headers?: boolean;
+  content?: boolean;
+};
 ```
