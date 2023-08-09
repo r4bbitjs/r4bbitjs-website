@@ -67,13 +67,13 @@ It can be `my.dinosaurs` or `my.i.don.t.care`.
 When the message receive to the server we want to take some actions. The handler function exactly created for this purpose.
 
 ```ts
-import { getServer, ServerTypes } from '@r4bbit/r4bbit';
+import { getServer, ServerTypes } from "@r4bbit/r4bbit";
 
 const handlerFunc: ServerTypes.AckHandler =
   ({ ack }) =>
   (msg: string | object) => {
     ack();
-    console.log('Received message is ->', msg);
+    console.log("Received message is ->", msg);
   };
 ```
 
@@ -88,7 +88,7 @@ But what a server used for if it never receives a message? Let's also add the cl
 When adding a client instance we add them the same way as the server
 
 ```ts
-import { getServer, getClient, ServerTypes } from '@r4bbit/r4bbit';
+import { getServer, getClient, ServerTypes } from "@r4bbit/r4bbit";
 
 //..
 const localRabbitUrl = "amqp://guest:guest@localhost:5672/";
@@ -101,10 +101,10 @@ Alright we came to the last point let's use our client to publish a message to o
 
 ```ts
 await client.publishMessage(
-  { content: 'hello world!!!' },
+  { content: "hello world!!!" },
   {
-    exchangeName: 'my-exchange',
-    routingKey: 'my.routing-key',
+    exchangeName: "my-exchange",
+    routingKey: "my.routing-key",
   }
 );
 ```
@@ -116,34 +116,34 @@ Easy as that! We pass the message content, exchange name and the routing key to 
 Let's run the whole code and see what happens!
 
 ```ts
-import { getServer, getClient, ServerTypes } from '@r4bbit/r4bbit';
+import { getServer, getClient, ServerTypes } from "@r4bbit/r4bbit";
 
 const main = async () => {
-  const server = await getServer('amqp://guest:guest@localhost:5672/');
-  const client = await getClient('amqp://guest:guest@localhost:5672/');
+  const server = await getServer("amqp://guest:guest@localhost:5672/");
+  const client = await getClient("amqp://guest:guest@localhost:5672/");
 
   const handlerFunc: ServerTypes.AckHandler =
     ({ ack }) =>
     (msg: string | object) => {
       ack();
-      console.log('Received message is ->', msg);
+      console.log("Received message is ->", msg);
     };
 
   // create a server with one route
   await server.registerRoute(
     {
-      queueName: 'my-queue',
-      exchangeName: 'my-exchange',
-      routingKey: 'my.*',
+      queueName: "my-queue",
+      exchangeName: "my-exchange",
+      routingKey: "my.*",
     },
     handlerFunc
   );
 
   await client.publishMessage(
-    { content: 'hello world!!!' },
+    { content: "hello world!!!" },
     {
-      exchangeName: 'my-exchange',
-      routingKey: 'my.routing-key',
+      exchangeName: "my-exchange",
+      routingKey: "my.routing-key",
     }
   );
 };
@@ -158,6 +158,3 @@ When we execute the code, we see this prompts in the console
 Because of r4bbitjs comes with default logging features that's all you need for RabbitMQ communication!
 
 Don't stop now, go to the guides and see all the other communication patterns and options r4bbitjs offers!
-
-
-
