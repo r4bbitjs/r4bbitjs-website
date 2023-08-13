@@ -1,165 +1,273 @@
-Server class is used to register routes to receive messages
+Server class is used to receive messages from the RabbitMQ.
 
 ## Methods
 
-### `init()`
+### registerRoute()
 
-Server initializes the connection to RabbitMQ
-
-<div class="alert alert--warning margin-bottom--md" role="alert">
-  It is only used internally, users should not use it
-</div>
+Receives messages from a specific routing key and exchange name.
+It doesn't reply responses. For response reply take a look at [registerRPCRoute](#registerrpcroute)
 
 **_Parameters_**
 
-- `connectionUrls` - connection url or array of connection urls
-- `options` - options for the server
+- `connection`: [ServerConnection](#serverconnection) - Message to be published
+- `handlerFunction`: [Handler](#handler) | [AckHandler](#ackhandler) - A handler function that is executed when a message is received.
+- `options`?: [ServerOptions](#serveroptions) - Options related with received message's content
+  **_Example usage_**
 
-### `getWrapper()`
+Example in which the server receives a message from the exchange `my-exchange` with the routing key `my.*`
 
-It returns amqplib-connection-manager's channel wrapper
-
-<div class="alert alert--warning margin-bottom--md" role="alert">
-  It is only used internally, users should not use it
-</div>
-
-### `registerRoute()`
-
-**_Parameters_**
-
-- `connection` - connection object
-- `handlerFunction` - function to handle received message
-- `options` - options for the server
-
-**_Example usage_**
-
-1. Server instance calls the registerRoute method, setting up a route using specified exchangeName, queueName, and routingKey.
-2. The registered handler function logs incoming messages and responds with the string "Hello World".
+Because of r4bbitjs uses topic exchange by default it means any topic name starts with `my.<any-string>`
 
 ```ts
-const server = await getServer("amqp://localhost");
+const handlerFunc: ServerTypes.AckHandler =
+  ({ ack }) =>
+  (msg: string | object) => {
+    console.log("Received message is ->", msg); // our
+    ack(); // Manual acknowledgement (execute after your operation ends)
+  };
+
 await server.registerRoute(
   {
-    exchangeName: "exchangeName",
-    queueName: "queueName",
-    routingKey: "routingKey",
+    queueName: "my-queue",
+    exchangeName: "my-exchange",
+    routingKey: "my.*",
   },
-  async (message) => {
-    console.log(message);
-    return "Hello World";
-  }
-);
-```
-
-This example demonstrates how to set up a RabbitMQ message route, specify the behavior of the message consumer, and customize the logger and response settings:
-
-As a third argument to registerRoute, it provides an options object that specifies:
-
-- consumeOptions with noAck set to true, meaning that the consumer does not need to acknowledge the messages.
-- responseContains with signature set to false, indicating that the response does not contain a signature.
-- loggerOptions with isDataHidden set to false, meaning the logger will display the data in the log without sanitizing it.
-
-```ts
-const server = await getServer("amqp://localhost");
-await server.registerRoute(
-  {
-    exchangeName: "exchangeName",
-    queueName: "queueName",
-    routingKey: "routingKey",
-  },
-  async (message) => {
-    console.log(message);
-    return "Hello World";
-  },
+  handlerFunc,
   {
     consumeOptions: {
-      noAck: true,
-    },
-    responseContains: {
-      signature: false,
+      noAck: false, // default is false
     },
     loggerOptions: {
-      isDataHidden: false,
+      isDataHidden: true, // default is false
+    },
+    responseContains: {
+      content: true, // default is true
+      headers: true, // default is false
     },
   }
 );
 ```
 
-## `registerRPCRoute()`
+<div class="alert alert--warning" role="alert">
+  Beware that publish message does not accept any response returned. If you want to receive a response use <a href="#publishrpcmessage">publishRPCMessage</a> instead.
+</div>
+<br />
 
-Registers a new RPC route on the server
+---
+
+### registerRPCRoute()
+
+Registers an RPC route. It receives messages from a specific routing key and exchange name and returns a response.
 
 **_Parameters_**
 
-- `connection` - The connection details for the RPC route.
-- `handlerFunction` - The function to handle incoming RPC requests.
-- `options` - Optional options for the RPC route.
+- `connection`: [ServerConnection](#serverconnection) - connection to RabbitMQ
+- `handlerFunction`: [RpcHandler](#rpchandler) - function that will be executed when a message is received
+- `options`?: [ServerRPCOptions](#serverrpcoptions) - server options for receiving rpc messages
 
 **_Example usage_**
 
-**_1. The Basic Use Case:_**
+This example demonstrates the usage of the registerRPCRoute method to create a Remote Procedure Call (RPC) route. It shows setting up a server, defining an RPC route, and creating a handler function to process incoming requests and respond back to the client with processed data.
 
 ```ts
-const server = await getServer("amqp://localhost");
+const handler: ServerTypes.RpcHandler =
+  (reply: ServerTypes.Reply) => (msg: Record<string, unknown> | string) => {
+    if (!msg) {
+      return;
+    }
+    reply((msg as { content: string }).content);
+  };
+
 await server.registerRPCRoute(
   {
-    exchangeName: "exchangeName",
-    queueName: "queueName",
-    routingKey: "routingKey",
+    queueName: serverQueueName,
+    routingKey: "*.routing-key",
+    exchangeName: "my-exchange",
   },
-  async (message) => {
-    console.log(message);
-    return "Hello World";
+  handler,
+  {
+    replySignature: "rpc-server-signature",
+    responseContains: {
+      content: true, // default is true
+      headers: true, // default is false
+      signature: false, // default is false
+    },
+    consumeOptions: {
+      noAck: false, // default is false
+    },
+    loggerOptions: {
+      isConsumeDataHidden: false, // default is false
+      isSendDataHidden: false, // default is false
+    },
+    publishOptions: {
+      persistent: true, // default is true
+      // ...
+    },
+    sendType: "json", // default is 'json'
+  }
+);
+
+await server.registerRPCRoute(
+  {
+    exchangeName: "test-exchange",
+    queueName: "test-queue",
+    routingKey: "test-routing-key",
+  },
+  handler,
+  {
+    responseContains: { signature: true }, // optional, default: undefined - no signature in the response
+    loggerOptions: {
+      isSendDataHidden: true, // optional, default: false
+      isConsumeDataHidden: true, // optional, default: false
+    },
+    consumeOptions: { noAck: false }, // optional, default: false, i.e., acknowledgments are expected
+    publishOptions: { persistent: true }, // optional, default: false
+    replySignature: "reply-sig", // optional, default: undefined - no reply signature
   }
 );
 ```
 
-In this example, we're establishing an RPC route with the server. The route is defined with certain exchangeName, queueName, and routingKey. Once a message is received on this route, the server logs the message and responds with "Hello World".
+---
 
-**_2. The Custom Options Use Case:_**
+### getWrapper()
 
-```ts
-const server = await getServer("amqp://localhost");
-await server.registerRPCRoute(
-  {
-    exchangeName: "customExchange",
-    queueName: "customQueue",
-    routingKey: "customKey",
-  },
-  async (message) => {
-    console.log("Received: ", message);
-    return { response: "Custom Response" };
-  },
-  {
-    consumeOptions: { noAck: true },
-    responseContains: { signature: false },
-    loggerOptions: { isDataHidden: false },
-  }
-);
-```
+r4bbitjs is built over amqplib and [node-amqp-connection-manager](https://github.com/jwalton/node-amqp-connection-manager), wrapper is an api exposed by node-amqp-connection-manager that allows us to do all those crazy stuff like
 
-In this example, we're establishing an RPC route as before, but now we're using custom route parameters (exchangeName, queueName, routingKey) and a custom message handler. We’ve specified consumeOptions, responseContains, and loggerOptions for more control over the way the message handling operates
+- deleting exchanges
+- cancelling all the processes
+- ...
 
-**_3. The Complex Handler Use Case:_**
+**_Parameters_**
+
+None
+
+**_Example usage_**
+
+In this example we're closing all the consumer connections and eventually the connection with the MQ itself.
 
 ```ts
-const server = await getServer("amqp://localhost");
-await server.registerRPCRoute(
-  {
-    exchangeName: "orders",
-    queueName: "process_orders",
-    routingKey: "order_key",
-  },
-  async (message) => {
-    let order = JSON.parse(message.content.toString());
-    await processOrder(order);
-    return { status: "success" };
-  },
-  {
-    consumeOptions: { noAck: false },
-    loggerOptions: { isDataHidden: true },
-  }
-);
+await server.getWrapper().cancelAll();
+await server.getWrapper().close();
 ```
 
-In this example, we're receiving orders on an RPC route, and processing each order within the message handler. The server sends back a success status once the order is processed. We’ve also set consumeOptions and loggerOptions to control acknowledgment and logging.
+---
+
+### close()
+
+Gracefully closes the connection with RabbitMQ.
+
+**_Parameters_**
+
+None
+
+**_Example usage_**
+
+```ts
+await server.close();
+```
+
+## Types
+
+### ServerConnection
+
+```ts
+type ServerConnection = {
+  queueName: string;
+  routingKey: string;
+  exchangeName: string;
+};
+```
+
+### ServerOptions
+
+Link for the custom types used as property of ClientMultipleRPC type
+
+- [ServerResponseContains](#serverresponsecontains)
+
+```ts
+consumeOptions?: Options.Consume;  // Linked below 👇
+responseContains?: ServerResponseContains;
+loggerOptions?: {
+  isDataHidden?: boolean;
+};
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
+</div>
+<br />
+
+### ServerRPCOptions
+
+```ts
+type ServerRPCOptions = {
+  publishOptions?: Options.Publish; // Linked below 👇
+  consumeOptions?: Options.Consume; // Linked below 👇
+  sendType?: MessageType;
+  correlationId?: string;
+  replySignature?: string;
+  responseContains?: ServerResponseContains;
+  loggerOptions?: {
+    isSendDataHidden?: boolean;
+    isConsumeDataHidden?: boolean;
+  };
+};
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
+  See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
+</div>
+<br />
+
+### Handler
+
+Handler function is a function that executes when a message is received, it should be only used when noAck option specified in the [ServerOptions.consumeOptions](#serveroptions)
+
+```ts
+type Handler = (msg: string | Record<string, unknown>) => void;
+```
+
+### AckHandler
+
+AckHandler is a function that returns handlerFunction, the advantage of using ackHandler is, you can manually acknowledge your messages.
+It should be only used when ack option specified in the [ServerOptions.consumeOptions](#serveroptions)
+
+```ts
+export type AckHandler = (ackObj: AckObj) => Handler; // Referenced above 👆
+```
+
+### RpcHandler
+
+```ts
+type RpcHandler = (
+  reply: Reply
+) => (msg: string | Record<string, unknown>) => void;
+```
+
+### MessageType
+
+```ts
+type MessageType = "json" | "string" | "object";
+```
+
+### ResponseContains
+
+```ts
+type ResponseContains = {
+  signature?: boolean;
+  headers?: boolean;
+  content?: boolean;
+};
+```
+
+### ServerResponseContains
+
+```ts
+type ServerResponseContains = {
+  headers?: boolean;
+  content?: boolean;
+};
+```
