@@ -1,5 +1,19 @@
 Server class is used to receive messages from the RabbitMQ.
 
+## Factory
+
+### getServer()
+
+Creates a singleton server instance.
+r4bbitjs makes validation for urls, and throws an error for the invalid ones.
+
+**_Parameters_**
+
+- `connectionUrls`: [ConnectionUrl](#connectionurl) | [ConnectionUrl[]](#connectionurl) - One or an array of RabbitMQ connection urls/objects.
+- `options`?: [InitRabbitOptions](#initrabbitoptions) - Options for the connection with RabbitMQ instance.
+
+**_Example usage_**
+
 ## Methods
 
 ### registerRoute()
@@ -167,6 +181,56 @@ await server.close();
 ```
 
 ## Types
+
+### ConnectionUrl
+
+```ts
+type ConnectionUrl =
+  | string
+  | amqp.Options.Connect // Linked below 👇
+  | {
+      url: string;
+      connectionOptions?: AmqpConnectionOptions; // Linked below 👇
+    };
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib and node-amqp-connection-manager, and we are supporting all the parameters they provide.
+  <br />
+  See:
+  <br />
+  <ul>
+    <li>
+    <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L24">amqp.Options.Connect</a> here
+    </li>
+    <li>
+    <a href="https://github.com/jwalton/node-amqp-connection-manager/blob/599d31f01d2e13d6a049bd7645e39e5de99d0293/src/AmqpConnectionManager.ts#L26">AmqpConnectionOptions</a> here
+    </li>
+  </ul>
+</div>
+<br />
+
+### InitRabbitOptions
+
+```ts
+export type InitRabbitOptions = {
+  connectOptions?: AmqpConnectionManagerOptions; // Linked below 👇
+  createChannelOptions?: CreateChannelOpts; // Linked below 👇
+};
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib and node-amqp-connection-manager, AmqpConnectionManagerOptions and CreateChannelOpts are passed further to this library methods.
+  See:
+    <ul>
+      <li>
+       <a href="https://github.com/jwalton/node-amqp-connection-manager/blob/599d31f01d2e13d6a049bd7645e39e5de99d0293/src/AmqpConnectionManager.ts#L46">AmqpConnectionManagerOptions</a>
+      </li>
+      <li>
+      <a href="https://github.com/jwalton/node-amqp-connection-manager/blob/599d31f01d2e13d6a049bd7645e39e5de99d0293/src/ChannelWrapper.ts#L21">CreateChannelOpts</a>
+      </li>
+    </ul>
+</div>
 
 ### ServerConnection
 

@@ -1,5 +1,26 @@
 Client class is used to publish messages to the RabbitMQ server
 
+## Factory
+
+### getClient()
+
+The getClient function is used for instantiating and returning an instance of the Client class defined in this module.
+
+**_Parameters_**
+
+- `connectionUrls`: [ConnectionUrl](#connectionurl) | [ConnectionUrl[]](#connectionurl) - One or many RabbitMQ connection urls (if many, the additional paramaters will be treated as fallback ones)
+
+- `options`?: [InitRabbitOptions](#initrabbitoptions) - Additional options for initializing RabbitMQ
+
+**_Example usage_**
+
+```ts
+const client = await getClient([
+  "amqp://guest:guest@localhost:5672/",
+  "amqp://fallback@localhost:5672/",
+]);
+```
+
 ## Methods
 
 ### publishMessage()
@@ -168,6 +189,40 @@ await client.close();
 ```
 
 ## Types
+
+### InitRabbitOptions
+
+```ts
+export type InitRabbitOptions = {
+  connectOptions?: AmqpConnectionManagerOptions; // Linked below 👇
+  createChannelOptions?: CreateChannelOpts; // Linked below 👇
+};
+```
+
+<div class="alert alert--warning" role="alert">
+  r4bbitjs is built over amqplib and node-amqp-connection-manager, AmqpConnectionManagerOptions and CreateChannelOpts are passed further to this library methods.
+  See:
+    <ul>
+      <li>
+       <a href="https://github.com/jwalton/node-amqp-connection-manager/blob/599d31f01d2e13d6a049bd7645e39e5de99d0293/src/AmqpConnectionManager.ts#L46">AmqpConnectionManagerOptions</a>
+      </li>
+      <li>
+      <a href="https://github.com/jwalton/node-amqp-connection-manager/blob/599d31f01d2e13d6a049bd7645e39e5de99d0293/src/ChannelWrapper.ts#L21">CreateChannelOpts</a>
+      </li>
+    </ul>
+</div>
+
+### ConnectionUrl
+
+```ts
+type ConnectionUrl =
+  | string
+  | amqp.Options.Connect
+  | {
+      url: string;
+      connectionOptions?: AmqpConnectionOptions;
+    };
+```
 
 ### ClientOptions
 
