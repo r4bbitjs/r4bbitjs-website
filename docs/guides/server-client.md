@@ -1,10 +1,5 @@
 ---
 id: server-client
-title: r4bbitjs | server-client communication
-tags:
-  - r4bbitjs
-  - RabbitMQ
-  - server client communication
 description: An example of server client communication in r4bbitjs
 ---
 
@@ -42,6 +37,10 @@ const server = await getServer(
 );
 ```
 
+Log presented after the connection is established.
+
+![An example that displays log of establishing the connection](./assets/server-client/connection-established-log.png)
+
 ## Register a route
 
 In order a server to listen for the messages, we need to save it to a specific topic and exchange.
@@ -72,7 +71,9 @@ server.registerRoute checks for the given queue name and if such a queue does no
 If a logger passed to r4bbitjs (such as winston etc.), it uses that logger.
 If no logger passed to it, r4bbitjs sets up a default logger (more about this topic in `advanced guides/logger` docs),
 
-To anonimize the logged data, set `isDataHidden` option to `true`.
+To anonimize the logged data, set `isDataHidden` option to `true`. Example added below.
+
+![An example that displays anoymous logs](./assets/server-client/anonymous-log.png)
 
 ```ts
   // create a server with one route
@@ -101,7 +102,7 @@ To anonimize the logged data, set `isDataHidden` option to `true`.
 
 ## Crete a client and send the message
 
-While creating a client, we support all the possible options node-amqp-connection-manager gives, those options have good default therefore if you don't know what you are doing we suggest not to change the defaults.
+While creating a client, we support all the possible options node-amqp-connection-manager gives, those options have good defaults therefore if you don't know what you are doing we suggest not to change the defaults.
 
 ```ts
 const client = await getClient(
@@ -122,7 +123,31 @@ const client = await getClient(
 );
 ```
 
+Client sends the message
+
+```ts
+await client.publishMessage(
+  { content: "hello world!!!" },
+  {
+    exchangeName: "my-exchange",
+    routingKey: "my.routing-key",
+    loggerOptions: {
+      isDataHidden: false, // default is true,
+    },
+    sendType: "json", // default is 'json'
+  }
+);
+```
+
+When client sends the message we print the log below.
+
+![An example that displays log of publishing a message](./assets/server-client/publish-log.png)
+
 ## Close the connection
+
+You don't need to close connection of your r4bbitjs `client` and `server`. Because in a normal app, a `server` should listen until the end of the application lifetime.
+
+But there are certain cases where you want to close the connection, for that we also provide this option.
 
 To close a connection with the rabbitMQ broker you can use `close` method - it's avaliable for both server and client.
 
@@ -130,3 +155,7 @@ To close a connection with the rabbitMQ broker you can use `close` method - it's
 await client.close();
 await server.close();
 ```
+
+A log displayed after the connection is grafefully closed.
+
+![An example that displays log of closing the connection](./assets/server-client/connection-closed-log.png)

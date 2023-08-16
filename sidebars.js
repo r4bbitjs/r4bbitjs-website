@@ -17,6 +17,14 @@ module.exports = {
           type: "doc",
           id: "guides/rpc",
         },
+        {
+          type: "doc",
+          id: "guides/logger",
+        },
+        {
+          type: "doc",
+          id: "guides/multiple-rpc",
+        },
       ],
     },
     {
