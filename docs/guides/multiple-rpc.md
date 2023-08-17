@@ -88,7 +88,7 @@ In order for client to seperate the source of the reply we add the replySignatur
 
 Below there is an example of the received log, with the signatureof the server
 
-![An example that displays server signature](./assets/server-client/connection-established-log.png)
+![An example that displays server signature](./assets/rpc-multiple/server-reply-signature.png)
 
 ## Client Message Publish (Limited Replies Strategy)
 
@@ -125,7 +125,7 @@ await client.publishMultipleRPC(objectMessage, {
 
 Client produces one log for every messages it receives.
 
-![Examples of received replies](./assets/server-client/anonymous-log.png)
-![Examples of received replies](./assets/server-client/anonymous-log.png)
+![Examples of received replies](./assets/rpc-multiple/server-1-reply.png)
+![Examples of received replies](./assets/rpc-multiple/server-reply-signature.png)
 
 ## Client Message Publish (Unlimited Replies Strategy)
