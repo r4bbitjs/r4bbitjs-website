@@ -19,11 +19,21 @@ module.exports = {
         },
         {
           type: "doc",
-          id: "guides/logger",
+          id: "guides/multiple-rpc",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Advanced Guides",
+      items: [
+        {
+          type: "doc",
+          id: "advanced-guides/logger",
         },
         {
           type: "doc",
-          id: "guides/multiple-rpc",
+          id: "advanced-guides/request-tracer",
         },
       ],
     },

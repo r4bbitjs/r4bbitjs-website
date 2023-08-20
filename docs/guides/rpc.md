@@ -8,50 +8,17 @@ description: An example of an RPC communication in r4bbitjs
 This guide illustrates the RPC communication process between a server and a client using the r4bbitjs API. It provides an enhanced version of the initial setup, detailing all available API options.
 
 <div class="alert alert--primary" role="alert">
-  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/rpc/index.ts">r4bbitjs/examples/rpc</a>
+  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/rpc/index.ts" target="_blank">r4bbitjs/examples/rpc</a>.
 </div>
 <br />
 
-## Create a server
+## Create a server and a client instances
+
+We create a server and a client instances with an mq connection URL and no options - devault values will be used.
 
 ```ts
-const server = await getServer(
-  ["amqp://guest:guest@localhost:5672/", "amqp://fallback@localhost:5672/"],
-  {
-    connectOptions: {
-      // optional (both connectOptions and all its options)
-      reconnectTimeInSeconds: 10,
-      heartbeatIntervalInSeconds: 10,
-      // ...
-    },
-    createChannelOptions: {
-      // optional (both createChannelOptions and all its options)
-      name: "my-channel-name",
-      // ...
-    },
-  }
-);
-```
-
-## Crete a client
-
-```ts
-const client = await getClient(
-  ["amqp://guest:guest@localhost:5672/", "amqp://fallback@localhost:5672/"],
-  {
-    connectOptions: {
-      // optional (both connectOptions and all its options)
-      reconnectTimeInSeconds: 10,
-      heartbeatIntervalInSeconds: 10,
-      // ...
-    },
-    createChannelOptions: {
-      // optional (both createChannelOptions and all its options)
-      name: "my-channel-name",
-      // ...
-    },
-  }
-);
+const server = await getServer("amqp://guest:guest@localhost:5672/");
+const client = await getClient("amqp://guest:guest@localhost:5672/");
 ```
 
 ## Register a route
@@ -69,10 +36,6 @@ const handler =
 ```
 
 Then we register a route with the handler function.
-
-`Logger` options are optional, if you don't provide them, the default values will be used. If you want to hide the data that is being sent or received, you can set the `isConsumeDataHidden` or `isSendDataHidden` to `true`.
-
-`Response contains` options are optional, if you don't provide them, the default values will be used. If you want to get the response headers or signature, you can set the `headers` or `signature` to `true`.
 
 ```ts
 // create a server with one route
@@ -101,6 +64,14 @@ await server.registerRPCRoute(
   }
 );
 ```
+
+<div class="alert alert--secondary" role="alert">
+
+`Logger` options are optional, if you don't provide them, the default values will be used. If you want to hide the data that is being sent or received, you can set the `isConsumeDataHidden` or `isSendDataHidden` to `true`.
+
+`Response contains` options are optional, if you don't provide them, the default values will be used. If you want to get the response headers or signature, you can set the `headers` or `signature` to `true`.
+
+</div>
 
 ## Send the message as a client
 

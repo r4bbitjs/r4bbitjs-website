@@ -5,20 +5,20 @@ description: An example of multiple rpc communication
 
 # Multiple RPC Communication
 
-RabbitMQ out of the box gives us 2 possible communication patternsserver-client and the rpc.
+RabbitMQ out of the box gives us 2 possible communication patterns server-client and the rpc.
 
-However it gives us enough tools to build nour own patterns
+However it gives us enough tools to build our own patterns
 
-Biggest feature of r4bbitjs is actually providing a design pattern that is not implemented by RabbitMQ. Multiple rpc communication.
+Biggest feature of r4bbitjs is actually providing a design pattern that is not implemented by RabbitMQ. **Multiple rpc communication.**
 
-In this pattern, basically client publishes an **rpc message** to a nexchange with a topic name. Then receives **multiple replies** from different servers.
+In this pattern, basically client publishes an **rpc message** to an exchange with a topic name. Then receives **multiple replies** from different servers.
 
-There are two possible use cases for this method.
+There are two possible strategies of receiving multiple replies from rpc servers.
 
-1. If we know how many replies we will receive te wait until receiveingall the replies and take anaction. afterwards
-2. We don't know how many replies we will receive therefore we execute the messages as soon as they are received.
+1. If we know how many replies we will receive then we wait until receiving all the replies and take an action afterwards.
+2. If we don't know how many replies we will receive then we execute the actions as soon as they are received.
 
-In this guide we will walk through both of those possible cases and show their differences.
+In this guide we will walk through both of the possible cases and show their differences.
 
 <div class="alert alert--primary" role="alert">
   All the example code presented in this section can be accessed over 
@@ -81,12 +81,13 @@ await server.registerRPCRoute(
 <div class="alert alert--primary" role="alert">
   We are just passing elementary parameters in our examples, to see all the possible options please visit <a href="/docs/api-reference/server#registerrpcroute">api reference for registerRPCRoute</a>
 </div>
+<br />
 
-But wait, what is the replySignature we added.
+But wait, what is the `replySignature` we added to the `registerRPCRoute` options?
 
-In order for client to seperate the source of the reply we add the replySignature, thanks to that when client receives the replies, it will contain in the signature the location of the message sent.
+In order for clients to seperate the source of the reply we add the replySignature, thanks to that when client receives the replies, the message will contain the server's specific signature, message content and optionally the header parameters. Content and headers options are also available in client-server and rpc messaging.
 
-Below there is an example of the received log, with the signatureof the server
+Below, there is an example of the received log, with the signature of the server
 
 ![An example that displays server signature](./assets/rpc-multiple/server-reply-signature.png)
 
@@ -96,15 +97,13 @@ We mentioned that we have two possible strategies to listen for multiple rpc mes
 
 First we will look at the example of limited replies. Then we will go over unlimited one.
 
-// Here is a mermaid diagram that displays general structure
-
 Client has a specific method to publish multiple multiple rpc messages.
 
-If the client knows how many replies it will receive, it pass a waitedReplies value.
+If the client knows how many replies it will receive, it passes a waitedReplies value while executin `publishMultipleRPC` method.
 
-If waitedReplies receive before the timeout occurs then client automatically resolves the promise and returns the replies it receives.
+If waitedReplies are received before the timeout occurs then client automatically resolves the promise and returns the replies it receives.
 
-If timeout occurs before all the waitedReplies received, client returns all the replies it received (even though some expected ones didn't come),
+If timeout occurs before all the waitedReplies received, then client returns all the replies it received (even though all expected ones didn't come),
 
 If it doesn't receive any reply then returns an empty array.
 
@@ -129,3 +128,40 @@ Client produces one log for every messages it receives.
 ![Examples of received replies](./assets/rpc-multiple/server-reply-signature.png)
 
 ## Client Message Publish (Unlimited Replies Strategy)
+
+For the unlimited replies strategy, what we do is, having a handler function that handles the messages instantly. The biggest difference between this strategy and limited reply one, in the limited replies we wait until receiving all the messages then pass the answers as an array of actions..
+
+On this one however we pass the messages to the handler function as soon as they are received.
+
+```ts
+await client.publishMultipleRPC(objectMessage, {
+  exchangeName,
+  routingKey,
+  replyQueueName,
+  timeout: 5_000,
+  responseContains: {
+    content: true,
+    headers: true,
+    signature: true,
+  },
+  handler: async (msg) => {
+    // Handler is taking actions immediately when reply is received.
+    switch (msg.signature) {
+      case "server-1":
+        console.log("Server-1 Received:", msg);
+        break;
+      case "server-2":
+        console.log("Server-2 Received:", msg);
+        break;
+      default:
+        console.log("Unknown resource Received", msg);
+    }
+  },
+});
+```
+
+We suggest using switches for executing different actions based on the message source. But don't forget in order the messages to be seperated by the source the server actually needs to add the server signature.
+
+If the server signature is added by the server, we can seperate our actions based on the source
+
+![Examples of received replies in unlimited replies rpc](./assets/rpc-multiple-unlimited/rpc-multiple-unlimited-reply-example.png)
