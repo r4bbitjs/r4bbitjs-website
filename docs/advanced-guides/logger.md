@@ -15,6 +15,11 @@ There are 3 types of logs.
 
 In this tutorial we will mostly focus on message related logs, and show all the options for these logs.
 
+<div class="alert alert--primary" role="alert">
+  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/logger/index.ts" target="_blank">r4bbitjs/examples/logger</a>.
+</div>
+<br />
+
 ## Default Logger
 
 r4bbitjs is a batteries included library, in order to start using it without any effort, it comes with its small sized logger. r4bbitjs uses small sized [pino](https://github.com/pinojs/pino) to make the default logging.
