@@ -5,11 +5,11 @@ Server class is used to receive messages from the RabbitMQ.
 ### getServer()
 
 Creates a singleton server instance.
-r4bbitjs makes validation for urls, and throws an error for the invalid ones.
+r4bbitjs makes validation for URLs, and throws an error for the invalid ones.
 
 **_Parameters_**
 
-- `connectionUrls`: [ConnectionUrl](#connectionurl) | [ConnectionUrl[]](#connectionurl) - One or an array of RabbitMQ connection urls/objects.
+- `connectionUrls`: [ConnectionUrl](#connectionurl) | [ConnectionUrl[]](#connectionurl) - One or an array of RabbitMQ connection URLs/objects.
 - `options`?: [InitRabbitOptions](#initrabbitoptions) - Options for the connection with RabbitMQ instance.
 
 **_Example usage_**
@@ -19,18 +19,18 @@ r4bbitjs makes validation for urls, and throws an error for the invalid ones.
 ### registerRoute()
 
 Receives messages from a specific routing key and exchange name.
-It doesn't reply responses. For response reply take a look at [registerRPCRoute](#registerrpcroute)
+It doesn't reply. For replying servers, take a look at [registerRPCRoute](#registerrpcroute)
 
 **_Parameters_**
 
 - `connection`: [ServerConnection](#serverconnection) - Message to be published
 - `handlerFunction`: [Handler](#handler) | [AckHandler](#ackhandler) - A handler function that is executed when a message is received.
-- `options`?: [ServerOptions](#serveroptions) - Options related with received message's content
+- `options`?: [ServerOptions](#serveroptions) - Options related to received message's content
   **_Example usage_**
 
 Example in which the server receives a message from the exchange `my-exchange` with the routing key `my.*`
 
-Because of r4bbitjs uses topic exchange by default it means any topic name starts with `my.<any-string>`
+Because of r4bbitjs uses topic exchange, it means any topic name starts with `my.<any-string>`
 
 ```ts
 const handlerFunc: ServerTypes.AckHandler =
@@ -63,7 +63,7 @@ await server.registerRoute(
 ```
 
 <div class="alert alert--warning" role="alert">
-  Beware that publish message does not accept any response returned. If you want to receive a response use <a href="#publishrpcmessage">publishRPCMessage</a> instead.
+  Beware that publish message does not accept any response returned. If you want to receive a response, use <a href="#publishrpcmessage">publishRPCMessage</a> instead.
 </div>
 <br />
 
@@ -157,7 +157,7 @@ None
 
 **_Example usage_**
 
-In this example we're closing all the consumer connections and eventually the connection with the MQ itself.
+In this example, we're closing all the consumer connections and eventually the connection with the MQ itself.
 
 ```ts
 await server.getWrapper().cancelAll();
@@ -257,7 +257,7 @@ loggerOptions?: {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
 </div>
 <br />
@@ -280,7 +280,7 @@ type ServerRPCOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
 </div>
@@ -288,7 +288,7 @@ type ServerRPCOptions = {
 
 ### Handler
 
-Handler function is a function that executes when a message is received, it should be only used when noAck option specified in the [ServerOptions.consumeOptions](#serveroptions)
+The Handler function is a function that executes when a message is received, it should be only used when noAck option specified in the [ServerOptions.consumeOptions](#serveroptions)
 
 ```ts
 type Handler = (msg: string | Record<string, unknown>) => void;

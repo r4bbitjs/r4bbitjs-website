@@ -49,6 +49,10 @@ module.exports = {
           type: "doc",
           id: "api-reference/server",
         },
+        {
+          type: "doc",
+          id: "api-reference/setupR4bbit",
+        },
       ],
     },
   ],

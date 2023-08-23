@@ -9,11 +9,11 @@ r4bbitjs is a highly opinionated library. It is built to take away the repeating
 r4bbitjs notifies the developers each time when an action occurs.
 There are 3 types of logs.
 
-- Message related logs ( in publish and receive events),
+- Message related logs (in publish and receive events),
 - Debug related logs (exp. connection start, gracefully close),
-- Error related logs (in each time a RabbitMQ error occurs )
+- Error related logs (for each time a RabbitMQ error occurs)
 
-In this tutorial we will mostly focus on message related logs, and show all the options for these logs.
+In this tutorial, we will mostly focus on message related logs, and show all the options for these logs.
 
 <div class="alert alert--primary" role="alert">
   All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/logger/index.ts" target="_blank">r4bbitjs/examples/logger</a>.
@@ -22,22 +22,22 @@ In this tutorial we will mostly focus on message related logs, and show all the 
 
 ## Default Logger
 
-r4bbitjs is a batteries included library, in order to start using it without any effort, it comes with its small sized logger. r4bbitjs uses small sized [pino](https://github.com/pinojs/pino) to make the default logging.
+r4bbitjs is a batteries included library, to start using it without any effort, it comes with a small-sized logger. It uses [pino](https://github.com/pinojs/pino) to make the default logging.
 
 r4bbitjs supports 2 possible ways of logging messages: json and yaml.
 
-For the best developer experience by default we use our yaml logs in the console. But you can specify your own logger and all the possible options with your logger.
+For the best developer experience, by default we use our yaml logs in the console. But you can specify your own logger and all the possible options with your logger.
 
 ## Default Logs
 
 Without adding any additional code, when we make an action, r4bbitjs logs it with its default logger.
-This is colorized, yaml log.
+This is a colorized, yaml log.
 
 ![Example of default pino log](./assets/logger/default-pino-log.png)
 
 ## Default Logs in JSON
 
-We may prefer using JSON logs at least in our runtime environment (In order to use cloud log aggregation systems like [grafana](https://grafana.com/oss/loki/) )
+We may prefer using JSON logs at least in our runtime environment (To use cloud log aggregation systems like [Grafana](https://grafana.com/oss/loki/))
 
 To set logger options we need to execute the `setupLogger` function before using `getClient` or `getServer` functions.
 
@@ -77,7 +77,7 @@ setupR4bbit({
 });
 ```
 
-After the logger is set up you can use `getServer` and `getClient` methods as usual and the logs will be printed in the console with the logger you specified.
+After the logger is set up, you can use `getServer` and `getClient` methods as usual and the logs will be printed in the console with the logger you specified.
 
 ```ts
 (async () => {
@@ -85,13 +85,13 @@ After the logger is set up you can use `getServer` and `getClient` methods as us
 })();
 ```
 
-which will resulting in printing the following logs in the terminal:
+Which will result in printing the following logs in the terminal:
 
 ![Example of logs after setting up winston](./assets/logger/winston-default-log.png)
 
 ## Yaml Format and Colors
 
-By default we set `isColorized` to `true` and `isJson` to `false`. This means that the logs will be printed in the console in yaml format and with colors.
+By default, we set `isColorized` to `true` and `isJson` to `false`. This means that the logs will be printed in the console in yaml format and with colors.
 
 You can change these options by passing them to the `setupLogger` method.
 
@@ -126,7 +126,7 @@ Please note that after selecting the `isJson` option, the isColorized option wil
 We already saw as a default option that we can colorize the logs by default in `isJson: false` option.
 
 But not just that, we can even change the color palette of logging colors.
-In order to do that we need to pass hexadecimal colors to the colors options
+In order to do that, we need to pass hexadecimal colors to the colors options
 
 ```ts
 

@@ -4,23 +4,23 @@ sidebar_position: 1
 
 # Getting Started
 
-**r4bbitjs** is the simplest and most efficient way of using **RabbitMQ**, In just a few lines of code you can make your RabbitMQ servers listen for messages and your RabbitMQ client to send messages.
+**r4bbitjs** is the simplest and most efficient way of using **RabbitMQ**, In just a few lines of code, you can make your RabbitMQ servers listen for messages and your RabbitMQ client to send messages.
 
 ## Installation
 
-Installing r4bbitjs is quite straight forward.
+Installing r4bbitjs is quite straightforward.
 
 ```bash
 npm install r4bbitjs
 ```
 
 <div class="alert alert--info" role="alert">
-  r4bbitjs has first-class support for <strong>TypeScript</strong>, you can take a look at the api reference for types
+  r4bbitjs has first-class support for <strong>TypeScript</strong>; you can take a look at the API reference for types
 </div>
 
 ## Setting Up The Server
 
-In order to receive a message first we must have a server listening for it. In r4bbitjs creating a server is super easy.
+To receive a message, first, we must have a server listening to it. In r4bbitjs, creating a server is super easy.
 
 ```ts
 import { getServer } from "@r4bbit/r4bbit";
@@ -31,18 +31,17 @@ const server = await getServer(localRabbitUrl);
 ```
 
 <div class="alert alert--warning" role="alert">
-  In order this example to work, you must run a local RabbitMQ broker.
+  For this example to work, you must run a local RabbitMQ broker.
   <br />
-  <a href="https://www.rabbitmq.com/download.html">Read how to setup a RabbitMQ instance</a>
+  <a href="https://www.rabbitmq.com/download.html">Read how to set up a RabbitMQ instance</a>
 </div>
 <br />
-
-Now we created a server. You can think server as your router instance. We just created an instance of it.
-Currently it is not listening for anything. Let's change that.
+Now, we created a server. You can think of the server as your router instance. We just created an instance of it.
+Currently, it is not listening to anything. Let's change that.
 
 ## Make The Server Actually Listen
 
-We have to register routes to server for it to listen
+We have to register routes to a server in order to listen
 
 ```ts
 await server.registerRoute(
@@ -55,16 +54,16 @@ await server.registerRoute(
 );
 ```
 
-But wait where is the `handlerFunc` defined?? No worries we didn't define it yet, let's focus on the `registerRoute` method first.
+But wait, where is the `handlerFunc` defined?? No worries, we haven't defined it yet; let's focus on the `registerRoute` method first.
 
-We simply give the name of the queue, exchange and topic key to our server. r4bbitjs by default use topic exchange, because of RabbitMQ implementation of topic exchange it automatically catches messages using its pattern.
+We pass the names of a queue, exchange, and topic to our server.
 
-This server will handle all the messages send with the topic key `my.{simply-anything}`.
+This server will handle all the messages sent with the topic key `my.{simply-anything}`.
 It can be `my.dinosaurs` or `my.i.don.t.care`.
 
 ## Creating a Handler Function
 
-When the message receive to the server we want to take some actions. The handler function exactly created for this purpose.
+When the message reaches the server, we want to take some actions. The handler function was created precisely for this purpose.
 
 ```ts
 import { getServer, ServerTypes } from "@r4bbit/r4bbit";
@@ -77,15 +76,15 @@ const handlerFunc: ServerTypes.AckHandler =
   };
 ```
 
-By default r4bbitjs uses acknowledgement instead of auto acknowledgement, so that the received message can wait in the queue if something goes wrong, in your function.
+By default, r4bbitjs uses acknowledgment instead of auto acknowledgment so that the received message can wait in the queue if something goes wrong in your function.
 
-Other than acknowledgement, we are just console logging the message we receive in our function.
+Other than acknowledgment, we are just console logging the message we receive in our function.
 
-But what a server used for if it never receives a message? Let's also add the client and see the whole picture.
+But what is a server used for if it never receives a message? Let's also add the client and see the whole picture.
 
 ## Adding Client
 
-When adding a client instance we add them the same way as the server
+When adding a client instance, we add them the same way as the server.
 
 ```ts
 import { getServer, getClient, ServerTypes } from "@r4bbit/r4bbit";
@@ -97,7 +96,7 @@ const client = await client(localRabbitUrl);
 
 ## Publishing a Message With The Client
 
-Alright we came to the last point let's use our client to publish a message to our created server.
+Alright, we came to the last point: let's use our client to publish a message to our created server.
 
 ```ts
 await client.publishMessage(
@@ -109,7 +108,7 @@ await client.publishMessage(
 );
 ```
 
-Easy as that! We pass the message content, exchange name and the routing key to the client and that does it all.
+Easy as that! We pass the message content, exchange name, and the routing key to the client, which does it all.
 
 ## The Whole Example
 
@@ -151,10 +150,10 @@ const main = async () => {
 main();
 ```
 
-When we execute the code, we see this prompts in the console
+When we execute the code, we see these prompts in the console.
 
 ![Gif recording of terminal when somebody executes the above code](../static/gif/getting-started.gif)
 
-Because of r4bbitjs comes with default logging features that's all you need for RabbitMQ communication!
+As r4bbitjs comes with default logging features, that's all you need for RabbitMQ communication!
 
-Don't stop now, go to the guides and see all the other communication patterns and options r4bbitjs offers!
+Don't stop now, check out the guides and see all the other communication patterns and options r4bbitjs offers!

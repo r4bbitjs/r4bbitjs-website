@@ -1,13 +1,13 @@
 ---
 id: server-client
-description: An example of server client communication in r4bbitjs
+description: An example of server-client communication in r4bbitjs
 ---
 
 # Server Client Communication
 
-This guide will provide a detailed example of how the communication between server and client is actually occuring.
+This guide will provide a detailed example of how the communication between server and client is actually occurring.
 
-The example we create will be a modified version of getting started, we will go through all the options the r4bbitjs API provides, and explain all the details.
+The example we create will be a modified version of getting started; we will go through all the options the r4bbitjs API provides and explain all the details.
 
 <div class="alert alert--primary" role="alert">
   All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/client-server/index.ts">r4bbitjs/examples/client-server</a>
@@ -16,7 +16,7 @@ The example we create will be a modified version of getting started, we will go 
 
 ## Create a server
 
-While creating a server, we support all the possible options node-amqp-connection-manager gives, those options have good default therefore if you don't know what you are doing we suggest not to change the defaults.
+While creating a server, we support all the possible options node-amqp-connection-manager gives; those options have good defaults; therefore, change them only if you know what you're doing.
 
 ```ts
 const server = await getServer(
@@ -43,10 +43,10 @@ Log presented after the connection is established.
 
 ## Register a route
 
-In order a server to listen for the messages, we need to save it to a specific topic and exchange.
-r4bbitjs by default only uses [topic exchange](https://www.cloudamqp.com/blog/rabbitmq-topic-exchange-explained.html#:~:text=Topic%20exchange%20is%20a%20built,to%20one%20or%20more%20queues.), so in the the topic server can actually listen a regular expression.
+For a server to listen for the messages, we need to send them to a specific topic and exchange.
+r4bbitjs uses only [topic exchange](https://www.cloudamqp.com/blog/rabbitmq-topic-exchange-explained.html#:~:text=Topic%20exchange%20is%20a%20built,to%20one%20or%20more%20queues.), which can actually listen a regular expression.
 
-Handler function can be either [AckHandler](/docs/api-reference/server#ackhandler) or just [Handler](/docs/api-reference/server#handler), with AckHandler you have the opportunity to acknowledge messages when you finish your operations. By default AckHandler is used. In order to use jsut the Handler function, specify it in the options of registerRoute.
+Handler function can be either [AckHandler](/docs/api-reference/server#ackhandler) or just [Handler](/docs/api-reference/server#handler); with AckHandler, you have the opportunity to acknowledge messages when you finish your operations. By default, AckHandler is used. To use just the Handler function, specify it in the options of registerRoute.
 
 ```ts
 const handlerFunc: ServerTypes.AckHandler =
@@ -66,12 +66,11 @@ const handlerFunc: ServerTypes.AckHandler =
   };
 ```
 
-server.registerRoute checks for the given queue name and if such a queue does not exist in thegiven exchange creates that queue name.
+server.registerRoute checks for the given queue name, and if it does not exist in the exchange, it creates it.
 
-If a logger passed to r4bbitjs (such as winston etc.), it uses that logger.
-If no logger passed to it, r4bbitjs sets up a default logger (more about this topic in `advanced guides/logger` docs),
+r4bbitjs has its own default logger (more about this topic in `advanced guides/logger` docs), but you can replace it with a custom one (such as winston etc.) if you want to.
 
-To anonimize the logged data, set `isDataHidden` option to `true`. Example added below.
+To anonimize the logged data, set `isDataHidden` option to `true` (check out the example below).
 
 ![An example that displays anoymous logs](./assets/server-client/anonymous-log.png)
 
@@ -100,9 +99,9 @@ To anonimize the logged data, set `isDataHidden` option to `true`. Example added
 );
 ```
 
-## Crete a client and send the message
+## Create a client and send the message
 
-While creating a client, we support all the possible options node-amqp-connection-manager gives, those options have good defaults therefore if you don't know what you are doing we suggest not to change the defaults.
+While creating a client, we support all the possible options node-amqp-connection-manager gives; those options have good defaults; therefore, change them only if you know what you're doing.
 
 ```ts
 const client = await getClient(
@@ -123,7 +122,7 @@ const client = await getClient(
 );
 ```
 
-Client sends the message
+An example of a client sending the message:
 
 ```ts
 await client.publishMessage(
@@ -139,23 +138,23 @@ await client.publishMessage(
 );
 ```
 
-When client sends the message we print the log below.
+When a client sends the message, we print the log below.
 
 ![An example that displays log of publishing a message](./assets/server-client/publish-log.png)
 
 ## Close the connection
 
-You don't need to close connection of your r4bbitjs `client` and `server`. Because in a normal app, a `server` should listen until the end of the application lifetime.
+You don't need to close the connection of your r4bbitjs `client` and `server`. Because in a normal app, a `server` should listen until the end of the application's lifetime.
 
-But there are certain cases where you want to close the connection, for that we also provide this option.
+But there are certain cases where you want to close the connection; we also provide this option.
 
-To close a connection with the rabbitMQ broker you can use `close` method - it's avaliable for both server and client.
+To close a connection with the rabbitMQ broker, you can use `close` method - it's available for both server and client.
 
 ```ts
 await client.close();
 await server.close();
 ```
 
-A log displayed after the connection is grafefully closed.
+A log is displayed after the connection is gracefully closed.
 
 ![An example that displays log of closing the connection](./assets/server-client/connection-closed-log.png)

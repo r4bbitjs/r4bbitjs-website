@@ -8,7 +8,7 @@ The getClient function is used for instantiating and returning an instance of th
 
 **_Parameters_**
 
-- `connectionUrls`: [ConnectionUrl](#connectionurl) | [ConnectionUrl[]](#connectionurl) - One or many RabbitMQ connection urls (if many, the additional paramaters will be treated as fallback ones)
+- `connectionUrls`: [ConnectionUrl](#connectionurl) | [ConnectionUrl[]](#connectionurl) - One or many RabbitMQ connection URLs (if many, the additional parameters will be treated as fallback ones)
 
 - `options`?: [InitRabbitOptions](#initrabbitoptions) - Additional options for initializing RabbitMQ
 
@@ -51,7 +51,7 @@ await client.publishMessage(
 ```
 
 <div class="alert alert--warning" role="alert">
-  Beware that publish message does not accept any response returned. If you want to receive a response use <a href="#publishrpcmessage">publishRPCMessage</a> instead.
+  Beware that publish message does not accept any response returned. If you want to receive a response, use <a href="#publishrpcmessage">publishRPCMessage</a> instead.
 </div>
 <br />
 
@@ -105,7 +105,7 @@ Publishes messages to the given exchange and waits for _multiple_ responses
 It has 2 possible strategies.
 
 - Listening for all the messages and returning the replies after if timeout occurs or expected number of replies gets received.
-- Using a handler function that listens for all the messages, and at the moment that the message gets received, executing necessary actions.
+- Using a handler function that listens for all the messages, and currently that the message gets received, executing necessary actions.
 
 We are giving examples for both of those options
 
@@ -142,7 +142,7 @@ await client.publishMultipleRPC(objectMessage, {
 });
 ```
 
-Example with unlimited number of replies that can occur within specified timespan `timeout: 5_000`:
+Example, with an unlimited number of replies that can occur within a specified timespan `timeout: 5_000`:
 
 ```ts
 await client.publishMultipleRPC(objectMessage, {
@@ -239,12 +239,16 @@ type ClientOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
 </div>
 <br />
 
 ### ServerRPCOptions
+
+Link for the custom types used as property of ServerRPCOptions type
+
+- [MessageType](#messagetype)
 
 ```ts
 type ServerRPCOptions = {
@@ -262,7 +266,7 @@ type ServerRPCOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we are supporting all the parameters amqplib provides.
+  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
 </div>

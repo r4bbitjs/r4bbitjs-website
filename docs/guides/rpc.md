@@ -14,7 +14,7 @@ This guide illustrates the RPC communication process between a server and a clie
 
 ## Create a server and a client instances
 
-We create a server and a client instances with an mq connection URL and no options - devault values will be used.
+We create a server and a client instances with a RabbitMQ connection URL and no options - default values will be used.
 
 ```ts
 const server = await getServer("amqp://guest:guest@localhost:5672/");
@@ -69,7 +69,7 @@ await server.registerRPCRoute(
 
 `Logger` options are optional, if you don't provide them, the default values will be used. If you want to hide the data that is being sent or received, you can set the `isConsumeDataHidden` or `isSendDataHidden` to `true`.
 
-`Response contains` options are optional, if you don't provide them, the default values will be used. If you want to get the response headers or signature, you can set the `headers` or `signature` to `true`.
+`Response contains` options are optional, if you don't provide them, the default values will be used. If you would like to get the response headers or signature, you can set the `headers` or `signature` to `true`.
 
 </div>
 
@@ -96,7 +96,7 @@ await client.publishRPCMessage(
 
 ## Close the connection
 
-Grafefully close the connection
+Gracefully close the connection
 
 ```ts
 await client.close();
