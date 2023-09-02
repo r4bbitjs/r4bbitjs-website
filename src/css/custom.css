@@ -64,13 +64,13 @@
     --background: #FFFFFF;
     --foreground: #1C1E21;
     --code-line-bg: rgba(0, 0, 0, 0.1);
-    --theme-primary: #f97206;
-    --theme-primary-dark: #ed6c06;
-    --theme-primary-darker: #e06705;
-    --theme-primary-darkest: #d46105	;
-    --theme-primary-light: #fa801f;
-    --theme-primary-lighter: #fa872b;
-    --theme-primary-lightest: #fb9c51;
+    --theme-primary: 27 95% 50%;
+    --theme-primary-dark: 26 95% 48%;
+    --theme-primary-darker: 27 96% 45%;
+    --theme-primary-darkest: 27 95% 43%;
+    --theme-primary-light: 27 96% 55%;
+    --theme-primary-lighter: 27 95% 57%;
+    --theme-primary-lightest: 26 96% 65%;
   }
   
   .dark {
@@ -78,13 +78,13 @@
     --background: #1B1B1D;
     --foreground: #E3E3E3;
     --code-line-bg: rgba(0, 0, 0, 0.3);
-    --theme-primary: #ff8406;
-    --theme-primary-dark: #f97206;
-    --theme-primary-darker: #f35f05;
-    --theme-primary-darkest: #ed4d05;
-    --theme-primary-light: #ff9721;
-    --theme-primary-lighter: #ffab3b;
-    --theme-primary-lightest: #ffbe56;
+    --theme-primary: 30 100% 51%;
+    --theme-primary-dark: 27 95% 50%;
+    --theme-primary-darker: 23 96% 49%;
+    --theme-primary-darkest: 19 96% 47%;
+    --theme-primary-light: 32 100% 56%;
+    --theme-primary-lighter: 34 100% 62%;
+    --theme-primary-lightest: 37 100% 67%;
   }
 }
 
