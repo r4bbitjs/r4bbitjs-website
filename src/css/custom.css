@@ -54,7 +54,38 @@
   --ifm-color-primary-light: #ff9721;
   --ifm-color-primary-lighter: #ffab3b;
   --ifm-color-primary-lightest: #ffbe56;
+  --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  :root {
+    --primary: 222.2 47.4% 11.2%;
+    --background: #FFFFFF;
+    --foreground: #1C1E21;
+    --code-line-bg: rgba(0, 0, 0, 0.1);
+    --theme-primary: 27 95% 50%;
+    --theme-primary-dark: 26 95% 48%;
+    --theme-primary-darker: 27 96% 45%;
+    --theme-primary-darkest: 27 95% 43%;
+    --theme-primary-light: 27 96% 55%;
+    --theme-primary-lighter: 27 95% 57%;
+    --theme-primary-lightest: 26 96% 65%;
+  }
+  
+  .dark {
+    --primary: 210 40% 98%;
+    --background: #1B1B1D;
+    --foreground: #E3E3E3;
+    --code-line-bg: rgba(0, 0, 0, 0.3);
+    --theme-primary: 30 100% 51%;
+    --theme-primary-dark: 27 95% 50%;
+    --theme-primary-darker: 23 96% 49%;
+    --theme-primary-darkest: 19 96% 47%;
+    --theme-primary-light: 32 100% 56%;
+    --theme-primary-lighter: 34 100% 62%;
+    --theme-primary-lightest: 37 100% 67%;
+  }
 }
 
 .header-github-link:hover {

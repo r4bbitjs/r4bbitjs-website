@@ -57,7 +57,6 @@ const config = {
             'https://github.com/r4bbitjs/r4bbitjs.github.io/',
         },
         theme: {
-          // defaultMode: "dark",
           customCss: require.resolve("./src/css/custom.css"),
         },
         sitemap: {
