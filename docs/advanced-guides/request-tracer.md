@@ -1,6 +1,6 @@
 ---
 id: request-tracer
-description: Tutorial of how to use request tracing functionalities in r4bbitjs.
+description: Tutorial of how to use request tracing functionalities in r4bbit.
 ---
 
 # Request Tracer
@@ -11,17 +11,17 @@ Request tracer is basically 2 functions, one that assigns a unique identifier to
 
 ## Default Request Tracer
 
-If we don't want to set a complicated request tracer ourselves and want to jump right into the code and start hacking, r4bbitjs actually makes us covered.
+If we don't want to set a complicated request tracer ourselves and want to jump right into the code and start hacking, r4bbit actually makes us covered.
 
-By default, r4bbitjs provides a request tracer that sets request IDs for each message sent, and the server that actually listens for the messages uses the requestId passed by the client.
+By default, r4bbit provides a request tracer that sets request IDs for each message sent, and the server that actually listens for the messages uses the requestId passed by the client.
 
 <div class="alert alert--primary" role="alert">
-  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/request-tracer/index.ts" target="_blank">r4bbitjs/examples/request-tracer</a>.
+  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbit/r4bbit/blob/dev/examples/request-tracer/index.ts" target="_blank">r4bbit/examples/request-tracer</a>.
 </div>
 <br />
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs uses nanoid for generating requestIds read more about it <a href="https://github.com/ai/nanoid" target="_blank">here</a>.
+  r4bbit uses nanoid for generating requestIds read more about it <a href="https://github.com/ai/nanoid" target="_blank">here</a>.
 </div>
 <br />
 
@@ -64,7 +64,7 @@ await client.publishRPCMessage(
 
 ## setRequestId and getRequestId
 
-If we have our own request tracing logic, we can easily use it with r4bbitjs. All we need are 2 functions, r4bbitjs expects a function that gets the request ID, and sets the request ID.
+If we have our own request tracing logic, we can easily use it with r4bbit. All we need are 2 functions, r4bbit expects a function that gets the request ID, and sets the request ID.
 
 Lets for our simple example have a global variable that acts like our generated requestId
 
@@ -83,15 +83,15 @@ setupR4bbit({
 
 ![custom request tracer example](./assets/request-tracer/get-req-id-passed-log.png)
 
-We can easily see that r4bbitjs called getRequestId and used that one throughout the communication.
+We can easily see that r4bbit called getRequestId and used that one throughout the communication.
 
-Alright, if the only thing we need is getRequestId, why did r4bbitjs ask for setRequestId too?
+Alright, if the only thing we need is getRequestId, why did r4bbit ask for setRequestId too?
 
-Because r4bbitjs wants the whole journey to be visible to the users, even after the message is received by the server and given to the application, users will probably still log different things.
+Because r4bbit wants the whole journey to be visible to the users, even after the message is received by the server and given to the application, users will probably still log different things.
 
 Sometimes some error messages or sometimes the progress of the operation.
 
-If r4bbitjs wouldn't be able to pass the requestId to setRequestId method, it would be impossible to track the journey of the message.
+If r4bbit wouldn't be able to pass the requestId to setRequestId method, it would be impossible to track the journey of the message.
 
 ## Only Giving getRequestId
 
@@ -131,4 +131,4 @@ setupR4bbit({
 
 ![set requestId example](./assets/request-tracer/default-request-tracer-log.png)
 
-In that case, r4bbitjs defines a requestId and uses that requestId throughout the communication, and before passing the result to the application it calls setRequestId and thanks to that, the user would be able to separate the requests
+In that case, r4bbit defines a requestId and uses that requestId throughout the communication, and before passing the result to the application it calls setRequestId and thanks to that, the user would be able to separate the requests

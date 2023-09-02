@@ -1,12 +1,12 @@
 ---
 id: logger
-description: Tutorial of how to use logging in r4bbitjs
+description: Tutorial of how to use logging in r4bbit
 ---
 
 # Logger
 
-r4bbitjs is a highly opinionated library. It is built to take away the repeating details from the developers.
-r4bbitjs notifies the developers each time when an action occurs.
+r4bbit is a highly opinionated library. It is built to take away the repeating details from the developers.
+r4bbit notifies the developers each time when an action occurs.
 There are 3 types of logs.
 
 - Message related logs (in publish and receive events),
@@ -16,21 +16,21 @@ There are 3 types of logs.
 In this tutorial, we will mostly focus on message related logs, and show all the options for these logs.
 
 <div class="alert alert--primary" role="alert">
-  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/logger/index.ts" target="_blank">r4bbitjs/examples/logger</a>.
+  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbit/r4bbit/blob/dev/examples/logger/index.ts" target="_blank">r4bbit/examples/logger</a>.
 </div>
 <br />
 
 ## Default Logger
 
-r4bbitjs is a batteries included library, to start using it without any effort, it comes with a small-sized logger. It uses [pino](https://github.com/pinojs/pino) to make the default logging.
+r4bbit is a batteries included library, to start using it without any effort, it comes with a small-sized logger. It uses [pino](https://github.com/pinojs/pino) to make the default logging.
 
-r4bbitjs supports 2 possible ways of logging messages: json and yaml.
+r4bbit supports 2 possible ways of logging messages: json and yaml.
 
 For the best developer experience, by default we use our yaml logs in the console. But you can specify your own logger and all the possible options with your logger.
 
 ## Default Logs
 
-Without adding any additional code, when we make an action, r4bbitjs logs it with its default logger.
+Without adding any additional code, when we make an action, r4bbit logs it with its default logger.
 This is a colorized, yaml log.
 
 ![Example of default pino log](./assets/logger/default-pino-log.png)

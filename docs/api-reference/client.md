@@ -200,7 +200,7 @@ export type InitRabbitOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib and node-amqp-connection-manager, AmqpConnectionManagerOptions and CreateChannelOpts are passed further to this library methods.
+  r4bbit is built over amqplib and node-amqp-connection-manager, AmqpConnectionManagerOptions and CreateChannelOpts are passed further to this library methods.
   See:
     <ul>
       <li>
@@ -239,7 +239,7 @@ type ClientOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
+  r4bbit is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
 </div>
 <br />
@@ -266,7 +266,7 @@ type ServerRPCOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
+  r4bbit is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
 </div>

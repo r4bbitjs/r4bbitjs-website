@@ -1,8 +1,8 @@
-Set's up logger and request tracer configurations for r4bbitjs. **Must be used before getClient or getServer **
+Set's up logger and request tracer configurations for r4bbit. **Must be used before getClient or getServer **
 
 ### setupR4bbit()
 
-Sets up r4bbitjs with the given options.
+Sets up r4bbit with the given options.
 
 **_Parameters_**
 

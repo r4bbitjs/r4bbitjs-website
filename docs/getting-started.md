@@ -4,23 +4,23 @@ sidebar_position: 1
 
 # Getting Started
 
-**r4bbitjs** is the simplest and most efficient way of using **RabbitMQ**, In just a few lines of code, you can make your RabbitMQ servers listen for messages and your RabbitMQ client to send messages.
+**r4bbit** is the simplest and most efficient way of using **RabbitMQ**, In just a few lines of code, you can make your RabbitMQ servers listen for messages and your RabbitMQ client to send messages.
 
 ## Installation
 
-Installing r4bbitjs is quite straightforward.
+Installing r4bbit is quite straightforward.
 
 ```bash
-npm install r4bbitjs
+npm install r4bbit
 ```
 
 <div class="alert alert--info" role="alert">
-  r4bbitjs has first-class support for <strong>TypeScript</strong>; you can take a look at the API reference for types
+  r4bbit has first-class support for <strong>TypeScript</strong>; you can take a look at the API reference for types
 </div>
 
 ## Setting Up The Server
 
-To receive a message, first, we must have a server listening to it. In r4bbitjs, creating a server is super easy.
+To receive a message, first, we must have a server listening to it. In r4bbit, creating a server is super easy.
 
 ```ts
 import { getServer } from "@r4bbit/r4bbit";
@@ -76,7 +76,7 @@ const handlerFunc: ServerTypes.AckHandler =
   };
 ```
 
-By default, r4bbitjs uses acknowledgment instead of auto acknowledgment so that the received message can wait in the queue if something goes wrong in your function.
+By default, r4bbit uses acknowledgment instead of auto acknowledgment so that the received message can wait in the queue if something goes wrong in your function.
 
 Other than acknowledgment, we are just console logging the message we receive in our function.
 
@@ -154,6 +154,6 @@ When we execute the code, we see these prompts in the console.
 
 ![Gif recording of terminal when somebody executes the above code](../static/gif/getting-started.gif)
 
-As r4bbitjs comes with default logging features, that's all you need for RabbitMQ communication!
+As r4bbit comes with default logging features, that's all you need for RabbitMQ communication!
 
-Don't stop now, check out the guides and see all the other communication patterns and options r4bbitjs offers!
+Don't stop now, check out the guides and see all the other communication patterns and options r4bbit offers!

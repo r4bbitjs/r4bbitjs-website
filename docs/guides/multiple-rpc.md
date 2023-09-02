@@ -9,7 +9,7 @@ RabbitMQ out of the box gives us 2 possible communication patterns, server-clien
 
 However, it gives us enough tools to build our own patterns
 
-The biggest feature of r4bbitjs is actually providing a design pattern that is not implemented by RabbitMQ. **Multiple rpc communication.**
+The biggest feature of r4bbit is actually providing a design pattern that is not implemented by RabbitMQ. **Multiple rpc communication.**
 
 In this pattern, basically, a client publishes an **rpc message** to an exchange with a topic name. Then receives **multiple replies** from different servers.
 
@@ -24,11 +24,11 @@ In this guide, we will walk through both of the possible cases and show their di
   All the example code presented in this section can be accessed over 
   <ul>
     <li>
-      <a href="https://github.com/r4bbitjs/r4bbitjs/tree/dev/examples/multiple-rpc/index.ts">
-      r4bbitjs/examples/multiple-rpc</a>
+      <a href="https://github.com/r4bbit/r4bbit/tree/dev/examples/multiple-rpc/index.ts">
+      r4bbit/examples/multiple-rpc</a>
     </li>
     <li>
-      <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/multiple-rpc-unknown-replies/index.ts">r4bbitjs/examples/multiple-rpc-unknown-replies</a>
+      <a href="https://github.com/r4bbit/r4bbit/blob/dev/examples/multiple-rpc-unknown-replies/index.ts">r4bbit/examples/multiple-rpc-unknown-replies</a>
     </li>
   </ul>
 </div>
@@ -39,7 +39,7 @@ In this guide, we will walk through both of the possible cases and show their di
 We can create multiple rpc servers just like how we create an rpc server.
 We are actually using the same method `registerRPCRoute`.
 
-In our example r4bbitjs server will listen for 2 different topics (`my.*` and `*.routing-key`), therefore when a client publishes a message with the topic `my.routing-key` both of them will reply.
+In our example r4bbit server will listen for 2 different topics (`my.*` and `*.routing-key`), therefore when a client publishes a message with the topic `my.routing-key` both of them will reply.
 
 Our handler just replies to the message it receives.
 

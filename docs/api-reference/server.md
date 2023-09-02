@@ -5,7 +5,7 @@ Server class is used to receive messages from the RabbitMQ.
 ### getServer()
 
 Creates a singleton server instance.
-r4bbitjs makes validation for URLs, and throws an error for the invalid ones.
+r4bbit makes validation for URLs, and throws an error for the invalid ones.
 
 **_Parameters_**
 
@@ -30,7 +30,7 @@ It doesn't reply. For replying servers, take a look at [registerRPCRoute](#regis
 
 Example in which the server receives a message from the exchange `my-exchange` with the routing key `my.*`
 
-Because of r4bbitjs uses topic exchange, it means any topic name starts with `my.<any-string>`
+Because of r4bbit uses topic exchange, it means any topic name starts with `my.<any-string>`
 
 ```ts
 const handlerFunc: ServerTypes.AckHandler =
@@ -145,7 +145,7 @@ await server.registerRPCRoute(
 
 ### getWrapper()
 
-r4bbitjs is built over amqplib and [node-amqp-connection-manager](https://github.com/jwalton/node-amqp-connection-manager), wrapper is an api exposed by node-amqp-connection-manager that allows us to do all those crazy stuff like
+r4bbit is built over amqplib and [node-amqp-connection-manager](https://github.com/jwalton/node-amqp-connection-manager), wrapper is an api exposed by node-amqp-connection-manager that allows us to do all those crazy stuff like
 
 - deleting exchanges
 - cancelling all the processes
@@ -195,7 +195,7 @@ type ConnectionUrl =
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib and node-amqp-connection-manager, and we are supporting all the parameters they provide.
+  r4bbit is built over amqplib and node-amqp-connection-manager, and we are supporting all the parameters they provide.
   <br />
   See:
   <br />
@@ -220,7 +220,7 @@ export type InitRabbitOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib and node-amqp-connection-manager, AmqpConnectionManagerOptions and CreateChannelOpts are passed further to this library methods.
+  r4bbit is built over amqplib and node-amqp-connection-manager, AmqpConnectionManagerOptions and CreateChannelOpts are passed further to this library methods.
   See:
     <ul>
       <li>
@@ -257,7 +257,7 @@ loggerOptions?: {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
+  r4bbit is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
 </div>
 <br />
@@ -280,7 +280,7 @@ type ServerRPCOptions = {
 ```
 
 <div class="alert alert--warning" role="alert">
-  r4bbitjs is built over amqplib, and we support all the parameters amqplib provides.
+  r4bbit is built over amqplib, and we support all the parameters amqplib provides.
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L108">Options.Publish</a> here
   See <a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/amqplib/properties.d.ts#L129">Options.Consume</a> here
 </div>

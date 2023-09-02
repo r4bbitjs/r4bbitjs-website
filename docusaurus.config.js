@@ -20,7 +20,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "r4bbitjs", // Usually your GitHub org/user name.
-  projectName: "r4bbitjs", // Usually your repo name.
+  projectName: "r4bbit", // Usually your repo name.
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",

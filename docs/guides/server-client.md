@@ -1,16 +1,16 @@
 ---
 id: server-client
-description: An example of server-client communication in r4bbitjs
+description: An example of server-client communication in r4bbit
 ---
 
 # Server Client Communication
 
 This guide will provide a detailed example of how the communication between server and client is actually occurring.
 
-The example we create will be a modified version of getting started; we will go through all the options the r4bbitjs API provides and explain all the details.
+The example we create will be a modified version of getting started; we will go through all the options the r4bbit API provides and explain all the details.
 
 <div class="alert alert--primary" role="alert">
-  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/client-server/index.ts">r4bbitjs/examples/client-server</a>
+  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbit/r4bbit/blob/dev/examples/client-server/index.ts">r4bbit/examples/client-server</a>
 </div>
 <br />
 
@@ -44,7 +44,7 @@ Log presented after the connection is established.
 ## Register a route
 
 For a server to listen for the messages, we need to send them to a specific topic and exchange.
-r4bbitjs uses only [topic exchange](https://www.cloudamqp.com/blog/rabbitmq-topic-exchange-explained.html#:~:text=Topic%20exchange%20is%20a%20built,to%20one%20or%20more%20queues.), which can actually listen a regular expression.
+r4bbit uses only [topic exchange](https://www.cloudamqp.com/blog/rabbitmq-topic-exchange-explained.html#:~:text=Topic%20exchange%20is%20a%20built,to%20one%20or%20more%20queues.), which can actually listen a regular expression.
 
 Handler function can be either [AckHandler](/docs/api-reference/server#ackhandler) or just [Handler](/docs/api-reference/server#handler); with AckHandler, you have the opportunity to acknowledge messages when you finish your operations. By default, AckHandler is used. To use just the Handler function, specify it in the options of registerRoute.
 
@@ -68,7 +68,7 @@ const handlerFunc: ServerTypes.AckHandler =
 
 server.registerRoute checks for the given queue name, and if it does not exist in the exchange, it creates it.
 
-r4bbitjs has its own default logger (more about this topic in `advanced guides/logger` docs), but you can replace it with a custom one (such as winston etc.) if you want to.
+r4bbit has its own default logger (more about this topic in `advanced guides/logger` docs), but you can replace it with a custom one (such as winston etc.) if you want to.
 
 To anonimize the logged data, set `isDataHidden` option to `true` (check out the example below).
 
@@ -144,7 +144,7 @@ When a client sends the message, we print the log below.
 
 ## Close the connection
 
-You don't need to close the connection of your r4bbitjs `client` and `server`. Because in a normal app, a `server` should listen until the end of the application's lifetime.
+You don't need to close the connection of your r4bbit `client` and `server`. Because in a normal app, a `server` should listen until the end of the application's lifetime.
 
 But there are certain cases where you want to close the connection; we also provide this option.
 

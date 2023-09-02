@@ -1,14 +1,14 @@
 ---
 id: rpc
-description: An example of an RPC communication in r4bbitjs
+description: An example of an RPC communication in r4bbit
 ---
 
 # RPC Communication
 
-This guide illustrates the RPC communication process between a server and a client using the r4bbitjs API. It provides an enhanced version of the initial setup, detailing all available API options.
+This guide illustrates the RPC communication process between a server and a client using the r4bbit API. It provides an enhanced version of the initial setup, detailing all available API options.
 
 <div class="alert alert--primary" role="alert">
-  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbitjs/r4bbitjs/blob/dev/examples/rpc/index.ts" target="_blank">r4bbitjs/examples/rpc</a>.
+  All the example code presented in this section can be accessed over <a href="https://github.com/r4bbit/r4bbit/blob/dev/examples/rpc/index.ts" target="_blank">r4bbit/examples/rpc</a>.
 </div>
 <br />
 
