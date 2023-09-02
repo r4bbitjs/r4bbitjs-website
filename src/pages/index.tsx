@@ -1,8 +1,6 @@
 import React from "react";
 import Layout from "@theme/Layout";
-// import HomepageFeatures from "@site/src/components/HomepageFeatures";
-
-import styles from "./index.module.css";
+import { MainFeaturesList } from "@site/src/components/MainFeatures/MainFeaturesList";
 
 const R4bbitLogo = require("@site/static/img/logo.svg").default;
 
@@ -41,7 +39,9 @@ export default function Home(): JSX.Element {
   return (
     <Layout title={`r4bbit 🐇`} description="The best way to use RabbitMQ">
       <HomepageHeader />
-      <main></main>
+      <main>
+        <MainFeaturesList />
+      </main>
     </Layout>
   );
 }
