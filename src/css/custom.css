@@ -54,7 +54,38 @@
   --ifm-color-primary-light: #ff9721;
   --ifm-color-primary-lighter: #ffab3b;
   --ifm-color-primary-lightest: #ffbe56;
+  --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  :root {
+    --primary: 222.2 47.4% 11.2%;
+    --background: #FFFFFF;
+    --foreground: #1C1E21;
+    --code-line-bg: rgba(0, 0, 0, 0.1);
+    --theme-primary: #f97206;
+    --theme-primary-dark: #ed6c06;
+    --theme-primary-darker: #e06705;
+    --theme-primary-darkest: #d46105	;
+    --theme-primary-light: #fa801f;
+    --theme-primary-lighter: #fa872b;
+    --theme-primary-lightest: #fb9c51;
+  }
+  
+  .dark {
+    --primary: 210 40% 98%;
+    --background: #1B1B1D;
+    --foreground: #E3E3E3;
+    --code-line-bg: rgba(0, 0, 0, 0.3);
+    --theme-primary: #ff8406;
+    --theme-primary-dark: #f97206;
+    --theme-primary-darker: #f35f05;
+    --theme-primary-darkest: #ed4d05;
+    --theme-primary-light: #ff9721;
+    --theme-primary-lighter: #ffab3b;
+    --theme-primary-lightest: #ffbe56;
+  }
 }
 
 .header-github-link:hover {
