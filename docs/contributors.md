@@ -35,7 +35,7 @@ The best way to get your bug fixed is to provide a reduced test case. A modified
 
 ## How to Get in Touch
 
-There is an active community of r4bbit users on the [Discord](www.discordlink.com) chat platform in case you need help with React.
+There is an active community of r4bbit users on the [Discord](https://discord.gg/cZUhj8Mx) chat platform in case you need help with React.
 
 ## Proposing a Change
 
