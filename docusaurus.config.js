@@ -1,6 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-require('dotenv').config();
+require("dotenv").config();
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
@@ -52,9 +52,8 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/r4bbitjs/r4bbitjs.github.io/',
+          sidebarPath: require.resolve("./sidebars.js"),
+          editUrl: "https://github.com/r4bbitjs/r4bbitjs.github.io/edit/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -75,18 +74,18 @@ const config = {
       algolia: {
         // The application ID provided by Algolia
         appId: process.env.ALGOLIA_APP_ID,
-  
+
         // Public API key: it is safe to commit it
         apiKey: process.env.ALGOLIA_API_KEY,
-  
-        indexName: process.env.ALGOLIA_INDEX_NAME, 
-  
+
+        indexName: process.env.ALGOLIA_INDEX_NAME,
+
         // Optional: see doc section below
         contextualSearch: true,
-  
+
         // Optional: Algolia search parameters
         searchParameters: {},
-  
+
         //... other Algolia params
       },
       // Replace with your project's social card
@@ -106,9 +105,9 @@ const config = {
           },
           {
             href: "https://github.com/r4bbitjs/r4bbitjs/",
-            className: 'header-github-link',
-            'aria-label': 'GitHub repository',
-            position: "right"
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
+            position: "right",
           },
         ],
       },

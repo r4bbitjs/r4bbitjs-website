@@ -55,5 +55,10 @@ module.exports = {
         },
       ],
     },
+    {
+      type: "doc",
+      label: "Contributors",
+      id: "contributors",
+    },
   ],
 };
