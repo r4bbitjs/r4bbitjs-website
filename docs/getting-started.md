@@ -23,7 +23,7 @@ npm install r4bbit
 To receive a message, first, we must have a server listening to it. In r4bbit, creating a server is super easy.
 
 ```ts
-import { getServer } from "@r4bbit/r4bbit";
+import { getServer } from "r4bbit";
 
 //..
 const localRabbitUrl = "amqp://guest:guest@localhost:5672/";
@@ -66,7 +66,7 @@ It can be `my.dinosaurs` or `my.i.don.t.care`.
 When the message reaches the server, we want to take some actions. The handler function was created precisely for this purpose.
 
 ```ts
-import { getServer, ServerTypes } from "@r4bbit/r4bbit";
+import { getServer, ServerTypes } from "r4bbit";
 
 const handlerFunc: ServerTypes.AckHandler =
   ({ ack }) =>
@@ -87,7 +87,7 @@ But what is a server used for if it never receives a message? Let's also add the
 When adding a client instance, we add them the same way as the server.
 
 ```ts
-import { getServer, getClient, ServerTypes } from "@r4bbit/r4bbit";
+import { getServer, getClient, ServerTypes } from "r4bbit";
 
 //..
 const localRabbitUrl = "amqp://guest:guest@localhost:5672/";
@@ -115,7 +115,7 @@ Easy as that! We pass the message content, exchange name, and the routing key to
 Let's run the whole code and see what happens!
 
 ```ts
-import { getServer, getClient, ServerTypes } from "@r4bbit/r4bbit";
+import { getServer, getClient, ServerTypes } from "r4bbit";
 
 const main = async () => {
   const server = await getServer("amqp://guest:guest@localhost:5672/");

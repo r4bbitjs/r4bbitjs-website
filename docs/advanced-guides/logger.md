@@ -46,7 +46,7 @@ To set logger options we need to execute the `setupLogger` function before using
 We will first see the basic json option for the pino
 
 ```ts
-import { getServer, getClient, ServerTypes, setupR4bbit } from "@r4bbit/r4bbit";
+import { getServer, getClient, ServerTypes, setupR4bbit } from "r4bbit";
 
 await setupR4bbit({
   logger: {
@@ -64,7 +64,7 @@ await setupR4bbit({
 You can use any other logger you want, just pass it as an option to the `setupR4bbit` method.
 
 ```ts
-import { getServer, setupR4bbit } from "@r4bbit/r4bbit";
+import { getServer, setupR4bbit } from "r4bbit";
 import * as winston from "winston";
 
 setupR4bbit({
